@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronFlex Gym — Transform Your Body</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --red: #EF4444;
+  --red-dark: #B91C1C;
+  --black: #0A0A0A;
+  --dark: #111827;
+  --dark2: #1F2937;
+  --white: #FFFFFF;
+  --gray: #F8FAFC;
+  --gray2: #E5E7EB;
+  --text-muted: #6B7280;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#111;}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:4px;}
+
+/* ─── NAVBAR ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:all .3s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;color:var(--white);}
+.logo span{color:var(--red);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,0.7);font-size:.85rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:color .3s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--red);transition:width .3s;}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--red);color:var(--white);padding:.6rem 1.5rem;border-radius:4px;font-size:.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all .3s;}
+.nav-cta:hover{background:var(--red-dark);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:25px;height:2px;background:var(--white);transition:all .3s;}
+.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:rgba(10,10,10,0.98);backdrop-filter:blur(20px);padding:2rem;z-index:999;border-bottom:1px solid var(--glass-border);}
+.mobile-menu.open{display:flex;flex-direction:column;gap:1.5rem;}
+.mobile-menu a{color:rgba(255,255,255,0.8);text-decoration:none;font-size:1rem;font-weight:500;text-transform:uppercase;letter-spacing:1px;}
+
+/* ─── HERO ─── */
+#hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(135deg,#0A0A0A 0%,#1a0505 50%,#0A0A0A 100%);}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(239,68,68,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,0.03) 1px,transparent 1px);background-size:60px 60px;}
+.hero-glow{position:absolute;top:10%;right:10%;width:600px;height:600px;background:radial-gradient(circle,rgba(239,68,68,0.15) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite;}
+.hero-glow2{position:absolute;bottom:10%;left:5%;width:400px;height:400px;background:radial-gradient(circle,rgba(239,68,68,0.08) 0%,transparent 70%);animation:pulse 6s ease-in-out infinite reverse;}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.5;}50%{transform:scale(1.2);opacity:1;}}
+.hero-content{position:relative;z-index:2;padding:0 5% 0 8%;max-width:750px;animation:fadeUp .8s ease both;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);padding:.4rem 1rem;border-radius:100px;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,9rem);line-height:.95;letter-spacing:2px;margin-bottom:1rem;}
+.hero-title span{color:var(--red);display:block;}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.7;max-width:480px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:var(--red);color:var(--white);padding:1rem 2.5rem;border-radius:4px;font-weight:700;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;text-decoration:none;}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 10px 30px rgba(239,68,68,0.4);}
+.btn-outline{background:transparent;color:var(--white);padding:1rem 2.5rem;border-radius:4px;font-weight:700;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;border:2px solid rgba(255,255,255,0.3);cursor:pointer;transition:all .3s;text-decoration:none;}
+.btn-outline:hover{border-color:var(--white);transform:translateY(-2px);}
+.hero-stats{position:absolute;bottom:3rem;left:8%;display:flex;gap:3rem;z-index:2;animation:fadeUp 1s ease .4s both;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--red);line-height:1;}
+.stat-label{font-size:.7rem;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;}
+.hero-image{position:absolute;right:0;bottom:0;height:100%;width:50%;object-fit:cover;object-position:center top;opacity:.6;mask-image:linear-gradient(to left,rgba(0,0,0,1) 40%,transparent 100%);}
+
+/* ─── SECTION BASE ─── */
+section{padding:6rem 8%;}
+.section-label{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:.8rem;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);line-height:1;letter-spacing:2px;margin-bottom:1rem;}
+.section-sub{color:rgba(255,255,255,0.5);max-width:500px;line-height:1.7;margin-bottom:3rem;}
+
+/* ─── PROGRAMS ─── */
+#programs{background:var(--dark);}
+.programs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
+.program-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:2.5rem 2rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden;}
+.program-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(239,68,68,0.1),transparent);opacity:0;transition:opacity .3s;}
+.program-card:hover{transform:translateY(-8px);border-color:rgba(239,68,68,0.4);box-shadow:0 20px 60px rgba(239,68,68,0.15);}
+.program-card:hover::before{opacity:1;}
+.prog-icon{width:60px;height:60px;background:rgba(239,68,68,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.5rem;border:1px solid rgba(239,68,68,0.2);}
+.prog-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;margin-bottom:.5rem;}
+.prog-desc{font-size:.85rem;color:rgba(255,255,255,0.5);line-height:1.6;}
+.prog-tag{display:inline-block;margin-top:1rem;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:600;}
+
+/* ─── TRAINERS ─── */
+#trainers{background:var(--black);}
+.trainers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;}
+.trainer-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;transition:all .4s;position:relative;}
+.trainer-card:hover{transform:translateY(-10px);box-shadow:0 25px 60px rgba(239,68,68,0.2);border-color:rgba(239,68,68,0.4);}
+.trainer-img{width:100%;height:280px;object-fit:cover;object-position:top;background:linear-gradient(135deg,#1a1a2e,#16213e);}
+.trainer-img-placeholder{width:100%;height:280px;background:linear-gradient(135deg,var(--dark2),var(--dark));display:flex;align-items:center;justify-content:center;font-size:5rem;color:rgba(255,255,255,0.1);}
+.trainer-info{padding:1.5rem;}
+.trainer-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;}
+.trainer-spec{font-size:.8rem;color:var(--red);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem;}
+.trainer-exp{font-size:.8rem;color:rgba(255,255,255,0.4);}
+
+/* ─── PRODUCTS ─── */
+#products{background:var(--dark);}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
+.product-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;overflow:hidden;transition:all .3s;}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(239,68,68,0.12);border-color:rgba(239,68,68,0.3);}
+.product-img{height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,var(--dark2),#0d1117);border-bottom:1px solid var(--glass-border);}
+.product-body{padding:1.5rem;}
+.product-name{font-weight:700;font-size:.95rem;margin-bottom:.3rem;}
+.product-rating{color:#F59E0B;font-size:.8rem;margin-bottom:.5rem;}
+.product-price{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--red);}
+.product-old{font-size:.75rem;color:rgba(255,255,255,0.3);text-decoration:line-through;margin-left:.3rem;}
+.add-cart{width:100%;margin-top:1rem;padding:.7rem;background:var(--red);color:var(--white);border:none;border-radius:6px;font-weight:600;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.add-cart:hover{background:var(--red-dark);}
+.add-cart.added{background:#10B981;}
+
+/* ─── GALLERY ─── */
+#gallery{background:var(--black);}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,180px);gap:12px;}
+.gallery-item{border-radius:10px;overflow:hidden;background:var(--dark2);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,0.15);transition:all .3s;cursor:pointer;position:relative;}
+.gallery-item:hover{transform:scale(1.02);border-color:rgba(239,68,68,0.4);}
+.gallery-item.tall{grid-row:span 2;}
+.gallery-item.wide{grid-column:span 2;}
+.gallery-label{position:absolute;bottom:.8rem;left:.8rem;font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+
+/* ─── PRICING ─── */
+#pricing{background:var(--dark);}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;}
+.pricing-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:2.5rem;transition:all .3s;position:relative;}
+.pricing-card.popular{border-color:var(--red);background:rgba(239,68,68,0.05);}
+.pricing-card:hover{transform:translateY(-8px);}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--red);color:var(--white);padding:.35rem 1.2rem;border-radius:100px;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+.plan-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px;margin-bottom:.5rem;}
+.plan-price{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--red);line-height:1;}
+.plan-period{font-size:.8rem;color:rgba(255,255,255,0.4);}
+.plan-divider{height:1px;background:var(--glass-border);margin:1.5rem 0;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem;}
+.plan-features li{font-size:.85rem;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:.7rem;}
+.plan-features li i{color:var(--red);font-size:.8rem;}
+
+/* ─── REVIEWS ─── */
+#reviews{background:var(--black);}
+.reviews-slider{display:flex;gap:1.5rem;overflow:hidden;position:relative;}
+.reviews-track{display:flex;gap:1.5rem;transition:transform .5s ease;width:100%;}
+.review-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:2rem;min-width:320px;flex-shrink:0;transition:all .3s;}
+.review-card:hover{border-color:rgba(239,68,68,0.3);}
+.review-stars{color:#F59E0B;margin-bottom:1rem;font-size:.9rem;}
+.review-text{font-size:.9rem;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.5rem;}
+.reviewer{display:flex;align-items:center;gap:1rem;}
+.reviewer-avatar{width:45px;height:45px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;}
+.reviewer-name{font-weight:600;font-size:.9rem;}
+.reviewer-tag{font-size:.75rem;color:rgba(255,255,255,0.4);}
+.slider-controls{display:flex;gap:.8rem;margin-top:1.5rem;}
+.slider-btn{width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);color:var(--white);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;}
+.slider-btn:hover{background:var(--red);border-color:var(--red);}
+
+/* ─── MEMBERSHIP FORM ─── */
+#membership{background:var(--dark);}
+.form-container{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:3rem;max-width:700px;backdrop-filter:blur(20px);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.form-group{display:flex;flex-direction:column;gap:.5rem;}
+.form-group.full{grid-column:span 2;}
+.form-label{font-size:.8rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);}
+.form-input,.form-select,.form-textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:.9rem 1.2rem;color:var(--white);font-family:'Poppins',sans-serif;font-size:.9rem;transition:all .3s;outline:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);background:rgba(239,68,68,0.05);box-shadow:0 0 0 3px rgba(239,68,68,0.1);}
+.form-select option{background:var(--dark2);color:var(--white);}
+.form-textarea{min-height:120px;resize:vertical;}
+.form-btns{display:flex;gap:1rem;margin-top:.5rem;}
+.success-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+.success-popup.show{display:flex;}
+.popup-box{background:var(--dark2);border:1px solid var(--glass-border);border-radius:20px;padding:3rem;text-align:center;max-width:400px;animation:fadeUp .4s ease;}
+.popup-icon{font-size:4rem;color:#10B981;margin-bottom:1rem;}
+.popup-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px;margin-bottom:.5rem;}
+.popup-msg{color:rgba(255,255,255,0.6);margin-bottom:2rem;}
+.btn-close-popup{background:var(--red);color:var(--white);border:none;padding:.8rem 2rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;}
+
+/* ─── FEEDBACK ─── */
+#feedback{background:var(--black);}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--dark);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.contact-info{display:flex;flex-direction:column;gap:2rem;}
+.contact-item{display:flex;align-items:flex-start;gap:1.5rem;}
+.contact-icon{width:50px;height:50px;background:rgba(239,68,68,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--red);font-size:1.1rem;flex-shrink:0;border:1px solid rgba(239,68,68,0.2);}
+.contact-detail h4{font-weight:600;margin-bottom:.3rem;font-size:.95rem;}
+.contact-detail p{font-size:.85rem;color:rgba(255,255,255,0.5);line-height:1.6;}
+.map-container{border-radius:16px;overflow:hidden;border:1px solid var(--glass-border);height:300px;background:var(--dark2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.2);font-size:3rem;position:relative;}
+.map-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(135deg,#1a0a0a,var(--dark2));}
+.map-placeholder p{font-size:.85rem;color:rgba(255,255,255,0.4);}
+.hours-box{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:1.5rem;margin-top:1.5rem;}
+.hours-title{font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:1rem;}
+.hours-row{display:flex;justify-content:space-between;font-size:.85rem;color:rgba(255,255,255,0.6);padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.hours-row:last-child{border-bottom:none;}
+.hours-row span:last-child{color:var(--white);}
+
+/* ─── FOOTER ─── */
+footer{background:var(--black);border-top:1px solid var(--glass-border);padding:4rem 8% 2rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand .logo{font-size:1.8rem;margin-bottom:1rem;display:block;}
+.footer-brand p{font-size:.85rem;color:rgba(255,255,255,0.4);line-height:1.7;max-width:260px;}
+.footer-social{display:flex;gap:.8rem;margin-top:1.5rem;}
+.social-icon{width:38px;height:38px;border-radius:8px;background:var(--glass);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:.85rem;transition:all .3s;text-decoration:none;}
+.social-icon:hover{background:var(--red);border-color:var(--red);color:var(--white);}
+.footer-col h4{font-weight:700;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.2rem;color:rgba(255,255,255,0.9);}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.footer-col ul a{text-decoration:none;color:rgba(255,255,255,0.4);font-size:.85rem;transition:color .3s;}
+.footer-col ul a:hover{color:var(--red);}
+.footer-bottom{border-top:1px solid var(--glass-border);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:rgba(255,255,255,0.3);}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(40px);transition:all .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
+  .gallery-item.tall,.gallery-item.wide{grid-row:span 1;grid-column:span 1;}
+}
+@media(max-width:768px){
+  nav{padding:.8rem 1.5rem;}
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  section{padding:4rem 5%;}
+  .hero-content{padding:0 5%;max-width:100%;}
+  .hero-title{font-size:clamp(3rem,12vw,5rem);}
+  .hero-stats{left:5%;gap:1.5rem;}
+  .hero-image{display:none;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:span 1;}
+  .footer-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <div class="logo">IRON<span>FLEX</span></div>
+  <ul class="nav-links">
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">Join Now</button>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#programs" onclick="closeMobile()">Programs</a>
+  <a href="#trainers" onclick="closeMobile()">Trainers</a>
+  <a href="#products" onclick="closeMobile()">Products</a>
+  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+  <a href="#reviews" onclick="closeMobile()">Reviews</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#membership" onclick="closeMobile()" style="color:var(--red);">Join Now →</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-fire"></i> Delhi's #1 Premium Gym</div>
+    <h1 class="hero-title">Transform<span>Your Body</span>Today</h1>
+    <p class="hero-sub">Push your limits. Build strength. Redefine what's possible. IronFlex is where champions are made — one rep at a time.</p>
+    <div class="hero-btns">
+      <a href="#membership" class="btn-primary">Join Now</a>
+      <a href="#pricing" class="btn-outline">Explore Plans</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">2500+</div><div class="stat-label">Members</div></div>
+    <div class="stat-item"><div class="stat-num">15+</div><div class="stat-label">Trainers</div></div>
+    <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Years</div></div>
+  </div>
+</section>
+
+<!-- ─── PROGRAMS ─── -->
+<section id="programs">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">Our Programs</h2>
+  <p class="section-sub">Specialized training programs designed to achieve your exact fitness goals — no matter where you're starting from.</p>
+  <div class="programs-grid reveal">
+    <div class="program-card">
+      <div class="prog-icon">🔥</div>
+      <div class="prog-title">Weight Loss</div>
+      <p class="prog-desc">High-intensity fat-burning workouts with personalized nutrition guidance to melt away excess weight.</p>
+      <div class="prog-tag">→ 45 min sessions</div>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon">💪</div>
+      <div class="prog-title">Muscle Gain</div>
+      <p class="prog-desc">Progressive overload programs built to maximize hypertrophy and build dense, powerful muscle mass.</p>
+      <div class="prog-tag">→ 60 min sessions</div>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon">❤️</div>
+      <div class="prog-title">Cardio Training</div>
+      <p class="prog-desc">Endurance and cardiovascular conditioning to strengthen your heart and dramatically boost stamina.</p>
+      <div class="prog-tag">→ 30 min sessions</div>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon">🎯</div>
+      <div class="prog-title">Personal Training</div>
+      <p class="prog-desc">1-on-1 dedicated coaching tailored entirely around your body, goals, and schedule.</p>
+      <div class="prog-tag">→ Custom sessions</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRAINERS ─── -->
+<section id="trainers">
+  <div class="section-label">Meet the Team</div>
+  <h2 class="section-title">Our Trainers</h2>
+  <p class="section-sub">World-class coaches with proven track records of transforming bodies and minds.</p>
+  <div class="trainers-grid reveal">
+    <div class="trainer-card">
+      <div class="trainer-img-placeholder">🏋️</div>
+      <div class="trainer-info">
+        <div class="trainer-spec">Strength & Powerlifting</div>
+        <div class="trainer-name">Arjun Sharma</div>
+        <div class="trainer-exp">8 Years Experience • NSCA Certified</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img-placeholder">🥊</div>
+      <div class="trainer-info">
+        <div class="trainer-spec">HIIT & Cardio</div>
+        <div class="trainer-name">Priya Kapoor</div>
+        <div class="trainer-exp">6 Years Experience • ACE Certified</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img-placeholder">🧘</div>
+      <div class="trainer-info">
+        <div class="trainer-spec">Yoga & Flexibility</div>
+        <div class="trainer-name">Ravi Gupta</div>
+        <div class="trainer-exp">10 Years Experience • RYT-500</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img-placeholder">⚡</div>
+      <div class="trainer-info">
+        <div class="trainer-spec">Sports Performance</div>
+        <div class="trainer-name">Neha Singh</div>
+        <div class="trainer-exp">5 Years Experience • CSCS Certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<section id="products">
+  <div class="section-label">Gym Store</div>
+  <h2 class="section-title">Our Products</h2>
+  <p class="section-sub">Premium gym supplements and equipment to fuel your performance and support your gains.</p>
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-img">🥤</div>
+      <div class="product-body">
+        <div class="product-name">Whey Protein 2KG</div>
+        <div class="product-rating">★★★★★ <span style="color:rgba(255,255,255,0.4)">(128)</span></div>
+        <div><span class="product-price">₹2,499</span><span class="product-old">₹3,200</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🏋️</div>
+      <div class="product-body">
+        <div class="product-name">Hex Dumbbells Set</div>
+        <div class="product-rating">★★★★☆ <span style="color:rgba(255,255,255,0.4)">(87)</span></div>
+        <div><span class="product-price">₹4,999</span><span class="product-old">₹6,500</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🧤</div>
+      <div class="product-body">
+        <div class="product-name">Gym Gloves Pro</div>
+        <div class="product-rating">★★★★★ <span style="color:rgba(255,255,255,0.4)">(203)</span></div>
+        <div><span class="product-price">₹799</span><span class="product-old">₹1,200</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🧃</div>
+      <div class="product-body">
+        <div class="product-name">Protein Shaker 700ml</div>
+        <div class="product-rating">★★★★☆ <span style="color:rgba(255,255,255,0.4)">(165)</span></div>
+        <div><span class="product-price">₹499</span><span class="product-old">₹799</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🔴</div>
+      <div class="product-body">
+        <div class="product-name">Resistance Bands Set</div>
+        <div class="product-rating">★★★★★ <span style="color:rgba(255,255,255,0.4)">(94)</span></div>
+        <div><span class="product-price">₹1,299</span><span class="product-old">₹1,800</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">⚡</div>
+      <div class="product-body">
+        <div class="product-name">Pre-Workout 300g</div>
+        <div class="product-rating">★★★★★ <span style="color:rgba(255,255,255,0.4)">(211)</span></div>
+        <div><span class="product-price">₹1,899</span><span class="product-old">₹2,500</span></div>
+        <button class="add-cart" onclick="addToCart(this)">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GALLERY ─── -->
+<section id="gallery">
+  <div class="section-label">Our Space</div>
+  <h2 class="section-title">Transformation Gallery</h2>
+  <p class="section-sub">State-of-the-art equipment, inspiring spaces, and real transformations.</p>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item tall" style="background:linear-gradient(135deg,#1a0505,#2d0808);">💪<div class="gallery-label">Weight Room</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#0a0a1a,#0d1526);">🏋️<div class="gallery-label">Power Zone</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#0d1a0a,#0a1f0d);">🥊<div class="gallery-label">Boxing</div></div>
+    <div class="gallery-item wide" style="background:linear-gradient(135deg,#1a1000,#2d1a00);">🔥<div class="gallery-label">Before & After</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#1a000a,#2d0015);">❤️<div class="gallery-label">Cardio Deck</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#001a1a,#002828);">🧘<div class="gallery-label">Yoga Studio</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#1a0a1a,#2a0a2a);">⚡<div class="gallery-label">HIIT Zone</div></div>
+    <div class="gallery-item" style="background:linear-gradient(135deg,#0a1a0a,#0d2a0d);">🏃<div class="gallery-label">Running Track</div></div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing">
+  <div class="section-label">Membership Plans</div>
+  <h2 class="section-title">Choose Your Plan</h2>
+  <p class="section-sub">Flexible membership options to fit your budget and fitness journey.</p>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">₹999<span class="plan-period">/month</span></div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check"></i> Gym Access (6AM–10PM)</li>
+        <li><i class="fas fa-check"></i> Locker Room Access</li>
+        <li><i class="fas fa-check"></i> Basic Equipment</li>
+        <li><i class="fas fa-check"></i> Group Classes (2/week)</li>
+        <li style="color:rgba(255,255,255,0.2)"><i class="fas fa-times"></i> Personal Trainer</li>
+        <li style="color:rgba(255,255,255,0.2)"><i class="fas fa-times"></i> Diet Consultation</li>
+      </ul>
+      <button class="btn-outline" style="width:100%;padding:.8rem" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">₹1,999<span class="plan-period">/month</span></div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check"></i> 24/7 Gym Access</li>
+        <li><i class="fas fa-check"></i> All Equipment Access</li>
+        <li><i class="fas fa-check"></i> Unlimited Group Classes</li>
+        <li><i class="fas fa-check"></i> Personal Trainer (4/month)</li>
+        <li><i class="fas fa-check"></i> Diet Consultation</li>
+        <li style="color:rgba(255,255,255,0.2)"><i class="fas fa-times"></i> Supplement Discounts</li>
+      </ul>
+      <button class="btn-primary" style="width:100%;padding:.8rem" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">VIP</div>
+      <div class="plan-price">₹3,999<span class="plan-period">/month</span></div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check"></i> 24/7 Premium Access</li>
+        <li><i class="fas fa-check"></i> All Equipment + Sauna</li>
+        <li><i class="fas fa-check"></i> Unlimited Classes</li>
+        <li><i class="fas fa-check"></i> Unlimited PT Sessions</li>
+        <li><i class="fas fa-check"></i> Nutrition Planning</li>
+        <li><i class="fas fa-check"></i> 20% Supplement Discounts</li>
+      </ul>
+      <button class="btn-outline" style="width:100%;padding:.8rem" onclick="document.getElementById('membership').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ─── -->
+<section id="reviews">
+  <div class="section-label">Testimonials</div>
+  <h2 class="section-title">What Members Say</h2>
+  <div class="reviews-slider">
+    <div class="reviews-track" id="reviewsTrack">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"IronFlex completely changed my life. Lost 18kg in 4 months with the weight loss program. The trainers are incredibly motivating and the facilities are world-class!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">R</div><div><div class="reviewer-name">Rohit Verma</div><div class="reviewer-tag">Member since 2023</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best gym in Delhi by far. The equipment is top-notch, trainers are certified professionals, and the atmosphere pushes you to give 100% every single session."</p>
+        <div class="reviewer"><div class="reviewer-avatar">A</div><div><div class="reviewer-name">Anjali Mehta</div><div class="reviewer-tag">VIP Member</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Gained 12kg of lean muscle in 6 months on the muscle gain program. Arjun sir is an absolute beast of a trainer. Worth every rupee of the VIP plan!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">S</div><div><div class="reviewer-name">Suresh Patel</div><div class="reviewer-tag">Premium Member</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"The yoga and flexibility classes with Ravi sir are amazing. I've become so much more mobile and my back pain is completely gone after just 2 months!"</p>
+        <div class="reviewer"><div class="reviewer-avatar">P</div><div><div class="reviewer-name">Priyanka Joshi</div><div class="reviewer-tag">Basic Member</div></div></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"24/7 access is a game changer. I work night shifts and being able to train at 2AM without any compromise on equipment quality is unbelievable value."</p>
+        <div class="reviewer"><div class="reviewer-avatar">K</div><div><div class="reviewer-name">Karan Malhotra</div><div class="reviewer-tag">Premium Member</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slider-controls">
+    <button class="slider-btn" onclick="slideReviews(-1)"><i class="fas fa-chevron-left"></i></button>
+    <button class="slider-btn" onclick="slideReviews(1)"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</section>
+
+<!-- ─── MEMBERSHIP FORM ─── -->
+<section id="membership">
+  <div class="section-label">Join Us</div>
+  <h2 class="section-title">Become a Member</h2>
+  <p class="section-sub">Fill out the form below and our team will contact you within 24 hours to get you started.</p>
+  <div class="form-container reveal">
+    <form id="membershipForm" onsubmit="submitMembership(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" class="form-input" id="fullName" placeholder="Arjun Sharma" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number *</label>
+          <input type="tel" class="form-input" id="phone" placeholder="+91 9876543210" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" class="form-input" id="email" placeholder="arjun@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Age *</label>
+          <input type="number" class="form-input" id="age" placeholder="25" min="16" max="80" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gender *</label>
+          <select class="form-select" id="gender" required>
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Plan</label>
+          <select class="form-select" id="plan">
+            <option value="">Select Plan</option>
+            <option>Basic — ₹999/month</option>
+            <option>Premium — ₹1,999/month</option>
+            <option>VIP — ₹3,999/month</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Fitness Goal *</label>
+          <select class="form-select" id="goal" required>
+            <option value="">What's your main goal?</option>
+            <option>Weight Loss</option>
+            <option>Muscle Gain</option>
+            <option>Cardio Improvement</option>
+            <option>Overall Fitness</option>
+            <option>Sports Performance</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-btns" style="margin-top:2rem">
+        <button type="submit" class="btn-primary">Apply Now →</button>
+        <button type="reset" class="btn-outline">Reset Form</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FEEDBACK ─── -->
+<section id="feedback">
+  <div class="section-label">Your Voice</div>
+  <h2 class="section-title">Leave Feedback</h2>
+  <p class="section-sub">We continuously improve based on your feedback. Share your experience!</p>
+  <div class="form-container reveal" style="max-width:600px">
+    <form onsubmit="submitFeedback(event)">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Your name" required>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Rating</label>
+          <div id="starRating" style="display:flex;gap:.5rem;font-size:1.8rem;cursor:pointer;margin-top:.3rem;">
+            <span onclick="setRating(1)">☆</span><span onclick="setRating(2)">☆</span>
+            <span onclick="setRating(3)">☆</span><span onclick="setRating(4)">☆</span>
+            <span onclick="setRating(5)">☆</span>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Your Message</label>
+          <textarea class="form-textarea" placeholder="Tell us about your experience at IronFlex..." required></textarea>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <button type="submit" class="btn-primary">Submit Feedback</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact Us</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+        <div class="contact-detail"><h4>Phone</h4><p>+91 9876543210<br>+91 9123456789</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+        <div class="contact-detail"><h4>WhatsApp</h4><p>+91 9876543210<br>Chat with us anytime</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div class="contact-detail"><h4>Email</h4><p>info@ironflex.com<br>support@ironflex.com</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="contact-detail"><h4>Address</h4><p>Plot 45, Sector 18, Gurugram<br>Haryana — 122001</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="map-container">
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt" style="font-size:3rem;color:var(--red)"></i>
+          <p>IronFlex Gym — Sector 18, Gurugram</p>
+        </div>
+      </div>
+      <div class="hours-box">
+        <div class="hours-title"><i class="fas fa-clock"></i> Opening Hours</div>
+        <div class="hours-row"><span>Monday – Friday</span><span>6:00 AM – 11:00 PM</span></div>
+        <div class="hours-row"><span>Saturday</span><span>6:00 AM – 10:00 PM</span></div>
+        <div class="hours-row"><span>Sunday</span><span>8:00 AM – 8:00 PM</span></div>
+        <div class="hours-row"><span>Public Holidays</span><span>8:00 AM – 6:00 PM</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">IRON<span>FLEX</span></span>
+      <p>Delhi's premium gym experience. We're committed to helping you reach your peak physical potential with world-class training and facilities.</p>
+      <div class="footer-social">
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#trainers">Trainers</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#programs">Weight Loss</a></li>
+        <li><a href="#programs">Muscle Gain</a></li>
+        <li><a href="#programs">Cardio Training</a></li>
+        <li><a href="#programs">Personal Training</a></li>
+        <li><a href="#programs">Yoga</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+        <li><a href="mailto:info@ironflex.com">info@ironflex.com</a></li>
+        <li><a href="#">Sector 18, Gurugram</a></li>
+        <li><a href="#">Open: 6AM – 11PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 IronFlex Gym. All rights reserved.</span>
+    <span>Made with ❤️ for champions</span>
+  </div>
+</footer>
+
+<!-- ─── SUCCESS POPUP ─── -->
+<div class="success-popup" id="successPopup">
+  <div class="popup-box">
+    <div class="popup-icon">✅</div>
+    <div class="popup-title">You're In!</div>
+    <p class="popup-msg">Welcome to IronFlex! Our team will contact you within 24 hours to complete your membership setup.</p>
+    <button class="btn-close-popup" onclick="document.getElementById('successPopup').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<div class="success-popup" id="feedbackPopup">
+  <div class="popup-box">
+    <div class="popup-icon">🙏</div>
+    <div class="popup-title">Thank You!</div>
+    <p class="popup-msg">Your feedback has been received. We truly appreciate you helping us improve IronFlex!</p>
+    <button class="btn-close-popup" onclick="document.getElementById('feedbackPopup').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+// Navbar scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click',()=>{
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');}
+
+// Reveal animations
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Reviews slider
+let reviewIdx=0;
+function slideReviews(dir){
+  const track=document.getElementById('reviewsTrack');
+  const cards=track.querySelectorAll('.review-card');
+  const total=cards.length;
+  reviewIdx=Math.max(0,Math.min(reviewIdx+dir,total-1));
+  const w=cards[0].offsetWidth+24;
+  track.style.transform=`translateX(-${reviewIdx*w}px)`;
+}
+
+// Add to cart
+function addToCart(btn){
+  btn.textContent='✓ Added!';
+  btn.classList.add('added');
+  setTimeout(()=>{btn.textContent='Add to Cart';btn.classList.remove('added');},2000);
+}
+
+// Star rating
+let currentRating=0;
+function setRating(n){
+  currentRating=n;
+  const stars=document.querySelectorAll('#starRating span');
+  stars.forEach((s,i)=>{s.textContent=i<n?'★':'☆';s.style.color=i<n?'#F59E0B':'rgba(255,255,255,0.3)';});
+}
+
+// Membership form
+function submitMembership(e){
+  e.preventDefault();
+  const name=document.getElementById('fullName').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const age=document.getElementById('age').value;
+  const gender=document.getElementById('gender').value;
+  const goal=document.getElementById('goal').value;
+  if(!name||!phone||!email||!age||!gender||!goal){alert('Please fill all required fields.');return;}
+  if(isNaN(age)||age<16||age>80){alert('Please enter a valid age between 16 and 80.');return;}
+  document.getElementById('membershipForm').reset();
+  document.getElementById('successPopup').classList.add('show');
+}
+
+// Feedback form
+function submitFeedback(e){
+  e.preventDefault();
+  e.target.reset();
+  setRating(0);
+  document.getElementById('feedbackPopup').classList.add('show');
+}
+</script>
+</body>
+</html>
